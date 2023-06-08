@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page title</title>
+    <link rel="stylesheet" href="./css/styles-1.css" />
+    <script type="module" src="./js/index(button).js"></script>
+  </head>
+  <body>
+    <form class="search-form" id="search-form">
+      <div class="container">
+        <div class="form-inner">
+          <input
+            type="text"
+            name="searchQuery"
+            autocomplete="off"
+            placeholder="Search images..."
+          />
+          <select name="language">
+            <option value="en">English</option>
+            <option value="pl">Poland</option>
+            <option value="de">Deutch</option>
+          </select>
+          <button type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="container">
+      <div class="gallery-wrapper">
+        <div class="gallery"></div>
+        <div class="gallery-inner">
+          <span class="loader-wrapper hidden">
+            <span class="loader"></span
+          ></span>
+          <button type="button " class="load-more hidden">Load more</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
