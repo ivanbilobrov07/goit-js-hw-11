@@ -62,7 +62,7 @@ const handleFormSubmit = async e => {
 
   formRef.elements.searchQuery.value = '';
 
-  const scroll = new OnlyScroll(document.querySelector('.gallery'), {
+  const scroll = new OnlyScroll(galleryRef, {
     damping: 0.8,
   });
 

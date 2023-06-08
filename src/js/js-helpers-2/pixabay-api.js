@@ -1,4 +1,3 @@
-import Notiflix from 'notiflix';
 import axios from 'axios';
 
 import { loaderIconRef } from './takingRefs';
@@ -25,27 +24,29 @@ class APIHandler {
     this.page++;
   }
 
-  async checkData(data) {
-    if (this.page === 1 && data.length === 0) {
-      Notiflix.Notify.failure('Cannot find photos on this topic');
+  checkData(data) {
+    if (data.length === 0) {
+      if (this.page === 1) {
+        throw new Error('Cannot find photos on this topic');
+      }
+
+      throw new Error('No more photos on this topic');
     }
   }
 
   async fetchItemsByvalue() {
     loaderIconRef.classList.remove('hidden');
 
-    try {
-      const response = await axios.get(
-        `${BASE_URL}?${this.params}&page=${this.page}`
-      );
-      const data = response.data;
+    const response = await axios
+      .get(`${BASE_URL}?${this.params}&page=${this.page}`)
+      .catch(() => {
+        throw new Error('Out of range');
+      });
 
-      this.checkData(data.hits);
+    const data = response.data;
+    this.checkData(data.hits);
 
-      return data.hits;
-    } catch {
-      throw new Error('No more photos on this topic');
-    }
+    return data.hits;
   }
 }
 

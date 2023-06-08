@@ -37,9 +37,11 @@ class APIHandler {
   async fetchItemsByvalue() {
     loaderIconRef.classList.remove('hidden');
 
-    const response = await axios.get(
-      `${BASE_URL}?${this.params}&page=${this.page}`
-    );
+    const response = await axios
+      .get(`${BASE_URL}?${this.params}&page=${this.page}`)
+      .catch(() => {
+        throw new Error('Out of range');
+      });
 
     const data = response.data;
     this.checkData(data.hits);

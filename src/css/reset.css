@@ -83,7 +83,6 @@ button,
 input[type='submit'] {
   box-shadow: none;
   background-color: white;
-  background: none;
   cursor: pointer;
 }
 
