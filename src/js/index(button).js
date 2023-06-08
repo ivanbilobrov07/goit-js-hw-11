@@ -26,10 +26,7 @@ const handlLoadMoreBtnClick = async () => {
   apiHandler.incrementPageCounter();
   loadMoreBtnRef.classList.add('hidden');
   try {
-    const dataFromAPI = await apiHandler.fetchItemsByvalue(
-      dataToSearch,
-      languageOfData
-    );
+    const dataFromAPI = await apiHandler.fetchItemsByvalue();
     await generateMarkup(dataFromAPI);
     lightbox.refresh();
   } catch (e) {
@@ -40,21 +37,23 @@ const handlLoadMoreBtnClick = async () => {
 
 const handleFormSubmit = async e => {
   e.preventDefault();
+
   loadMoreBtnRef.removeEventListener('click', handlLoadMoreBtnClick);
+
   galleryRef.innerHTML = '';
   loadMoreBtnRef.classList.add('hidden');
   galleryControlersRef.style.position = 'static';
   loaderIconRef.style.top = '50%';
 
   const formRef = e.currentTarget;
+
   let dataToSearch = formRef.elements.searchQuery.value;
   const languageOfData = formRef.elements.language.value;
 
+  apiHandler = new APIHandler(dataToSearch, languageOfData);
+
   try {
-    const dataFromAPI = await apiHandler.fetchItemsByvalue(
-      dataToSearch,
-      languageOfData
-    );
+    const dataFromAPI = await apiHandler.fetchItemsByvalue();
     await generateMarkup(dataFromAPI);
   } catch (e) {
     loaderIconRef.classList.add('hidden');
@@ -66,7 +65,8 @@ const handleFormSubmit = async e => {
   const scroll = new OnlyScroll(document.querySelector('.gallery'), {
     damping: 0.8,
   });
-  const lightbox = new SimpleLightbox('.gallery a', {
+
+  lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
@@ -74,6 +74,6 @@ const handleFormSubmit = async e => {
   loadMoreBtnRef.addEventListener('click', handlLoadMoreBtnClick);
 };
 
-const apiHandler = new APIHandler();
+let apiHandler, lightbox;
 
 searchFormRef.addEventListener('submit', handleFormSubmit);
