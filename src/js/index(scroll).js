@@ -63,6 +63,10 @@ const handleFormSubmit = async e => {
 
   formRef.elements.searchQuery.value = '';
 
+  const scroll = new OnlyScroll(window, {
+    damping: 0.8,
+  });
+
   lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
